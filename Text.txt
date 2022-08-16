@@ -1,0 +1,345 @@
+Session 27 :
+
+Angular Environment 
+
+Angular, the Angular CLI, and Angular applications depend on npm packages for many 
+features and functions. To download and install npm packages, you need an npm package 
+manager. 
+To check that you have the npm client installed, run npm -v in a terminal window.
+
+npm install -g @angular/cli
+
+On Windows client computers, the execution of PowerShell scripts is disabled by default. 
+To allow the execution of PowerShell scripts, 
+which is needed for npm global binaries, you must set the following
+
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
+Components  -View and Data 
+    classes and Decorators 
+    Data Binding 
+
+Directives 
+    - Components
+    - Structural 
+    - Attributive 
+
+Pipes 
+
+Component Life Cycle Hooks 
+
+Angular Forms 
+    Template Driven 
+    Reactive 
+
+Services & Dependency Injection 
+
+HTTPClient 
+
+    RXJS - Observables 
+
+Router - SPA 
+
+Angular Module 
+
+ng add <collection>            Adds support for an external library to your project.
+ng analytics                   Configures the gathering of Angular CLI usage metrics. See https://angular.io/cli/usage-analytics-gathering    
+ng build [project]             Compiles an Angular application or library into an output directory named dist/ at the given output path.      
+                                                                                                                                    [aliases: b]
+ng cache                       Configure persistent disk cache and retrieve cache statistics.
+ng completion                  Set up Angular CLI autocompletion for your terminal.
+ng config [json-path] [value]  Retrieves or sets Angular configuration values in the angular.json file for the workspace.
+ng deploy [project]            Invokes the deploy builder for a specified project or for the default project in the workspace.
+ng doc <keyword>               Opens the official Angular documentation (angular.io) in a browser, and searches for a given keyword.
+                                                                                                                                    [aliases: d]
+ng e2e [project]               Builds and serves an Angular application, then runs end-to-end tests.                              [aliases: e]
+ng extract-i18n [project]      Extracts i18n messages from source code.
+  
+ng new [name]                  Creates a new Angular workspace.
+ng generate                    Generates and/or modifies files based on a schematic.                                              [aliases: g]
+ng lint [project]              Runs linting tools on Angular application code in a given project folder.
+                                                                   [aliases: n]
+ng run <target>                Runs an Architect target with an optional custom builder configuration defined in your project.
+ng serve [project]             Builds and serves your application, rebuilding on file changes.                                    [aliases: s]
+ng test [project]              Runs unit tests in a project.                                                                      [aliases: t]
+ng update [packages..]         Updates your workspace and its dependencies. See https://update.angular.io/.
+ng version                     Outputs Angular CLI version.
+
+Regular Commands : 
+ng new [name]                  Creates a new Angular workspace.
+ng generate                    Generates and/or modifies files based on a schematic. 
+ng serve [project]             Builds and serves your application, rebuilding on file changes.  
+ng update [packages..]         Updates your workspace and its dependencies. See https://update.angular.io/.
+ng version                     Outputs Angular CLI version.
+
+
+
+    
+Session 28 :
+ng s -o
+ng g c comp_name 
+
+    chunk files 
+        runtime.js -- Webpack runtime file 
+        polyfills.js - supporting browsers
+        styles.js -- global style rules 
+        vendor.js --contains the scripts of 3rd party library 
+        main.js --- code of application
+
+Component is the main building block of Angular application.
+
+Component is responsible to provide the data to the view 
+
+    3 main building blocks
+        Template
+        Class 
+        MetaData 
+
+    MetaData - 
+        Selector 
+        Providers 
+        Directives
+        Styles/StyleUrls
+        template/templateUrl
+
+create a component : 
+    ng generate component comp_name 
+
+Data Binding :
+    Interpolation : {{title}} -- content inside {{Template Expression}}
+    Event Binding : ()
+    Property Binding : []
+    TwoWay Binding - NgModel 
+
+Session 29 :
+    Directive 
+     to Manipulate the DOM 
+
+     3 types of Directives 
+
+        - Component Directive 
+        - Structural Directive
+        - Attribute Directive 
+
+        Structural Directive: 
+            can change the DOM layout by adding and removing DOM elements.
+            *
+            ngFor  - trackBy
+            ngSwitch
+            ngIf
+-----------------------------------
+Example : 
+<div class="content">
+  <h1>Sample Project</h1>
+  <div *ngIf="condition">
+    <h2>Title : {{title}}</h2>
+  </div>
+  <button (click)="showContent()">Show/Hide</button>
+  
+  <p *ngFor = "let customer of customers">
+    {{customer.name}} ==> {{customer.age}} ===>> {{customer.address}}
+  </p>
+  <input type="text" [(ngModel)] = "num"/>
+  <div [ngSwitch]="num">
+    <div *ngSwitchCase="1">One</div>
+    <div *ngSwitchCase="2">Two</div>
+    <div *ngSwitchCase="3">Three</div>
+    <div *ngSwitchCase="4">Four</div>
+    <div *ngSwitchCase="5">Five</div>
+    <div *ngSwitchDefault>Not in Range</div>
+  </div>
+
+</div>
+
+.ts 
+
+ title : string = 'project_Angular_Aug';
+  condition : boolean = false;
+  num : number = 0;
+  customers : any[] = [
+    {
+      name : 'Abhi',
+      age : 24,
+      address  : 'Hyderabad'
+    },
+    {
+      name : 'Balu',
+      age : 27,
+      address  : 'Mumbai'
+    },
+    {
+      name : 'Cita',
+      age : 25,
+      address  : 'Vizag'
+    }
+  ];
+  showContent(){
+    this.condition = !this.condition;
+  }
+
+  ------------------------------------------
+        Attribute Directives 
+            can change the behaviour of the DOM 
+            ngModel 
+            ngClass
+            ngStyle
+
+        ngClass
+            used to add or remove the CSS classes from an HTML element.
+
+            <div [ngClass] = "firstsecond">....</div>
+
+             <h1 [ngClass]="{'red':true,'size20':false}">Sample Project</h1>
+             <p [ngClass]="cssArray" *ngFor = "let customer of customers">
+                {{customer.name}} ==> {{customer.age}} ===>> {{customer.address}}
+            </p>
+            ----------
+            cssArray : string[] = ['red','size20'];
+
+            ----------------
+            .red{
+                color: red;
+            }
+            .size20{
+                font-size: 20px;
+            }
+
+            ngStyle:
+                <div [ngStyle]= "{'color':'blue'}"></div>
+                <h1 [ngStyle]="{'color':'blue'}">Sample Project</h1>
+
+    Custom Directive  - @Directive 
+
+Session 30: 
+    Component Communication 
+      1. Parent to Child Communication
+      2. Child to Parent Communication
+      3. Interact when there is no parent -child relation
+    
+    1. Parent to Child Communication
+      @Input Property 
+
+    2.Child to Parent Communication 
+      EventEmitter 
+      @Output 
+
+      @ViewChild 
+        @ViewChild(ChildComponent) child : ChildComponent;
+
+    3. Interact when there is no parent -child relation
+        Services and Observables 
+
+  Session 31 : 
+    Pipes
+        Pipes formats or transforms the data to display.
+        Syntax : 
+          Expression | pipeOperator[:pipeArguments]
+
+        built-in pipes : 
+          currency pipe 
+          date pipe 
+            date_expression | date [:format]
+
+          number pipe 
+          percent pipe 
+          decimal pipe 
+            number_expression | number[:digitInfo]
+          slice pipe
+            array_or_string_expression | slice : start [:end]
+          uppercase 
+          lowercase 
+
+          date format : 
+            year    y       2022
+            year    yy      22
+            Month   M       8 
+            Month   MM      08  
+            Month   MMM     Aug
+            Month   MMMM    August
+            Day     d       9
+            Day     dd      09
+            hour    j       9
+            hour    jj      09  
+            hour    h       9 AM
+            hour    hh      09 AM
+            hour24  H       13
+            hour24  HH      13 
+            minute  m       9
+            minute  mm      09
+            seconds s       9
+            seconds ss      09
+            TimeZone z      Pacfic standard time 
+            TimeZone Z      GMT-08:00
+            TimeZone a      PM 
+            era       G     AD
+            era       GGGG  Anno Domini 
+
+            predefined Date Formats :
+
+            medium 
+            short 
+            fullDate
+            longDate
+            mediumDate
+            shortDate 
+            mediumTime 
+            shortTime 
+    Custom Pipes : 
+      pipe class 
+        pipeTransform
+        @pipe 
+
+    import { Pipe, PipeTransform } from '@angular/core';
+
+    @Pipe({
+      name: 'tempConverter'
+    })
+    export class TempConverterPipe implements PipeTransform {
+
+      transform(value: unknown, ...args: unknown[]): unknown {
+        return null;
+      }
+
+    }
+
+   ** async pipe : 
+      allows to subscribe to an Observable or promise from the template and returns the 
+      value emitted 
+
+        {{expression | async }}
+
+      keyValue pipe 
+        obj | keyValue
+        mapObj | keyValue
+
+    Component Life Cycle Hooks
+        class 
+          ngOnChanges 
+          ngOnInit
+          ngDoCheck
+          ngAfterContentInit
+          ngAfterContentChecked
+          ngAfterViewInit
+          ngAfterViewChecked
+          ngOnDestroy
+
+        Constructor 
+          Angular makes use of the Constructor to inject dependencies.
+          
+
+
+    Forms 
+    Services 
+
+Decorators: @ 
+    Component 
+    NgModule 
+    Directive
+    Input
+    Output
+    ViewChild
+    pipe 
+
+
+
+
